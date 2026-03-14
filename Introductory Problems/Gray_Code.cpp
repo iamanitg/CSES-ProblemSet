@@ -21,9 +21,7 @@ const ld EPS = 1e-9;
 const ld PI = acos(-1);
 
 /* ===================== FAST IO ===================== */
-#define fastio                   \
-    ios::sync_with_stdio(false); \
-    cin.tie(nullptr);
+#define fastio ios::sync_with_stdio(false); cin.tie(nullptr);
 
 /* ===================== DEBUG ===================== */
 #ifndef ONLINE_JUDGE
@@ -42,8 +40,7 @@ ll binpow(ll a, ll b)
     ll res = 1;
     while (b)
     {
-        if (b & 1)
-            res = mul(res, a);
+        if (b & 1) res = mul(res, a);
         a = mul(a, a);
         b >>= 1;
     }
@@ -67,8 +64,7 @@ struct DSU
     }
     int find(int x)
     {
-        if (p[x] == x)
-            return x;
+        if (p[x] == x) return x;
         return p[x] = find(p[x]);
     }
     void unite(int a, int b)
@@ -77,8 +73,7 @@ struct DSU
         b = find(b);
         if (a != b)
         {
-            if (sz[a] < sz[b])
-                swap(a, b);
+            if (sz[a] < sz[b]) swap(a, b);
             p[b] = a;
             sz[a] += sz[b];
         }
@@ -99,40 +94,34 @@ struct SegTree
 
     void build(int v, int tl, int tr, vector<ll> &a)
     {
-        if (tl == tr)
-            t[v] = a[tl];
+        if (tl == tr) t[v] = a[tl];
         else
         {
             int tm = (tl + tr) / 2;
-            build(v * 2, tl, tm, a);
-            build(v * 2 + 1, tm + 1, tr, a);
-            t[v] = t[v * 2] + t[v * 2 + 1];
+            build(v*2, tl, tm, a);
+            build(v*2+1, tm+1, tr, a);
+            t[v] = t[v*2] + t[v*2+1];
         }
     }
 
     ll query(int v, int tl, int tr, int l, int r)
     {
-        if (l > r)
-            return 0;
-        if (l == tl && r == tr)
-            return t[v];
+        if (l > r) return 0;
+        if (l == tl && r == tr) return t[v];
         int tm = (tl + tr) / 2;
-        return query(v * 2, tl, tm, l, min(r, tm)) +
-               query(v * 2 + 1, tm + 1, tr, max(l, tm + 1), r);
+        return query(v*2, tl, tm, l, min(r, tm)) +
+               query(v*2+1, tm+1, tr, max(l, tm+1), r);
     }
 
     void update(int v, int tl, int tr, int pos, ll val)
     {
-        if (tl == tr)
-            t[v] = val;
+        if (tl == tr) t[v] = val;
         else
         {
             int tm = (tl + tr) / 2;
-            if (pos <= tm)
-                update(v * 2, tl, tm, pos, val);
-            else
-                update(v * 2 + 1, tm + 1, tr, pos, val);
-            t[v] = t[v * 2] + t[v * 2 + 1];
+            if (pos <= tm) update(v*2, tl, tm, pos, val);
+            else update(v*2+1, tm+1, tr, pos, val);
+            t[v] = t[v*2] + t[v*2+1];
         }
     }
 };
@@ -152,8 +141,7 @@ vector<int> bfs(int src, vector<vector<int>> &adj)
 
     while (!q.empty())
     {
-        int u = q.front();
-        q.pop();
+        int u = q.front(); q.pop();
         for (int v : adj[u])
         {
             if (dist[v] == -1)
@@ -178,10 +166,8 @@ vector<ll> dijkstra(int src, vector<vector<pair<int, int>>> &adj)
 
     while (!pq.empty())
     {
-        auto [d, u] = pq.top();
-        pq.pop();
-        if (d > dist[u])
-            continue;
+        auto [d, u] = pq.top(); pq.pop();
+        if (d > dist[u]) continue;
 
         for (auto [v, w] : adj[u])
         {
@@ -199,60 +185,9 @@ vector<ll> dijkstra(int src, vector<vector<pair<int, int>>> &adj)
 void solve()
 {
     // Write problem-specific code here
-    string s;
-    cin >> s;
-    map<char, int> mp;
-    for (auto c : s)
-    {
-        mp[c]++;
-    }
-    int flag = 0;
-    char oddChar;
-    for (auto c = 'A'; c <= 'Z'; c++)
-    {
-        if (mp[c] & 1)
-        {
-            oddChar = c;
-            flag++;
-        }
-    }
-    if (flag >= 1)
-    {
-        if (flag > 1)
-        {
-            cout << "NO SOLUTION";
-            return;
-        }
-        else if (flag == 1 && !(s.length() & 1))
-        {
-            cout << "NO SOLUTION";
-            return;
-        }
-    }
-    string output = "";
-    for (auto c = 'A'; c <= 'Z'; c++)
-    {
-        int i = 0;
-        while (i < mp[c] / 2)
-        {
-            output.push_back(c);
-            i++;
-        }
-    }
-    if (flag)
-    {
-        output.push_back(oddChar);
-    }
-    for (auto c = 'Z'; c >= 'A'; c--)
-    {
-        int i = 0;
-        while (i < mp[c] / 2)
-        {
-            output.push_back(c);
-            i++;
-        }
-    }
-    cout << output;
+    int n;
+    cin>>n;
+    
 }
 
 /* ===================== MAIN ===================== */
@@ -261,7 +196,7 @@ int main()
     fastio;
 
     int T = 1;
-    // cin >> T;
+    cin >> T;
     while (T--)
     {
         solve();

@@ -194,65 +194,25 @@ vector<ll> dijkstra(int src, vector<vector<pair<int, int>>> &adj)
     }
     return dist;
 }
-
+void towerOfHanoi(int n, int left, int middle, int right)
+{
+    if (n == 1)
+    {
+        cout << left << " " << right << "\n";
+        return;
+    }
+    towerOfHanoi(n - 1, left, right, middle);
+    cout << left << " " << right << "\n";
+    towerOfHanoi(n - 1, middle, left, right);
+}
 /* ===================== SOLVE ===================== */
 void solve()
 {
     // Write problem-specific code here
-    string s;
-    cin >> s;
-    map<char, int> mp;
-    for (auto c : s)
-    {
-        mp[c]++;
-    }
-    int flag = 0;
-    char oddChar;
-    for (auto c = 'A'; c <= 'Z'; c++)
-    {
-        if (mp[c] & 1)
-        {
-            oddChar = c;
-            flag++;
-        }
-    }
-    if (flag >= 1)
-    {
-        if (flag > 1)
-        {
-            cout << "NO SOLUTION";
-            return;
-        }
-        else if (flag == 1 && !(s.length() & 1))
-        {
-            cout << "NO SOLUTION";
-            return;
-        }
-    }
-    string output = "";
-    for (auto c = 'A'; c <= 'Z'; c++)
-    {
-        int i = 0;
-        while (i < mp[c] / 2)
-        {
-            output.push_back(c);
-            i++;
-        }
-    }
-    if (flag)
-    {
-        output.push_back(oddChar);
-    }
-    for (auto c = 'Z'; c >= 'A'; c--)
-    {
-        int i = 0;
-        while (i < mp[c] / 2)
-        {
-            output.push_back(c);
-            i++;
-        }
-    }
-    cout << output;
+    int n;
+    cin >> n;
+    cout << binpow(2, n) - 1<<"\n";
+    towerOfHanoi(n, 1, 2, 3);
 }
 
 /* ===================== MAIN ===================== */
